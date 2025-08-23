@@ -1,0 +1,15 @@
+{
+    "method": "method1",
+    "encoded_dna": "output/shared/encoded_dna.txt",
+    "dna_sequence": "input/dna_sequence.txt",
+    "dna_file_2": "input/dna_sequence2.txt",
+    "signature_file": "output/shared/signature.bin",
+    "public_key_file": "output/shared/public_key.pem",
+    "codebook_file": "output/secure/codebook.json",
+    "keyfile": "output/secure/aes_key.bin",
+    "cipher": "gcm",
+    "error": "hamming",
+    "sig": "ecdsa",
+    "compressed_length": "output/secure/compressed_length.txt"
+  }
+  

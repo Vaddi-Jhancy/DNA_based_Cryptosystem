@@ -1,0 +1,13 @@
+{   
+    "dna_file": "input/dna_sequence.txt",
+    "message_file": "input/message.txt",
+    "method": "method1",
+    "dna_file_2": "input/dna_sequence2.txt",
+    "error_correction": "hamming",
+    "cipher_mode": "gcm",
+    "signature": "ecdsa",
+    "output": "encoded_dna.txt",
+    "key": 2,
+    "encoded_dna": "output/shared/encoded_dna.txt"
+  }
+  
