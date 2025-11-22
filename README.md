@@ -1,22 +1,26 @@
 # DNA_based_Cryptosystem
+
 DNA‑Based Secure Data Hiding System
 This project implements a DNA‑based secure data hiding system that combines compression, encryption, error correction, steganography, and digital signatures to provide confidentiality, integrity, authenticity, and high robustness for secret messaging using DNA sequences as the cover medium.​
 
 **Project overview**
+
 The system hides a compressed and encrypted secret message inside a DNA sequence so that the modified DNA still appears like a normal biological sequence, making detection extremely difficult while also protecting the content cryptographically. Two DNA‑steganography methods are provided, along with strong AES‑256 encryption and RSA/ECDSA signatures to give a multilayered security architecture suitable for secure messaging and DNA data storage.​
 
 **Key features**
-DNA steganography: Secret bits are embedded into organism DNA so that even large payloads are statistically and visually indistinguishable from normal DNA, especially when long sequences (up to billions of bases) are used.​
 
-Strong encryption (AES‑256, CBC/GCM): The message is encrypted with AES‑256 in CBC or GCM mode, giving a key‑space of 2^256 possibilities and ensuring unreadability without the symmetric key, even if the embedded data is extracted.​
+*DNA steganography: Secret bits are embedded into organism DNA so that even large payloads are statistically and visually indistinguishable from normal DNA, especially when long sequences (up to billions of bases) are used.​
 
-Error correction (Reed–Solomon, Hamming): Additional parity/check symbols are added to detect and correct both single‑bit and burst errors that may arise during DNA storage, transmission, or sequencing.​
+*Strong encryption (AES‑256, CBC/GCM): The message is encrypted with AES‑256 in CBC or GCM mode, giving a key‑space of 2^256 possibilities and ensuring unreadability without the symmetric key, even if the embedded data is extracted.​
 
-Digital signatures (RSA/ECDSA): SHA‑256 hashing plus RSA‑2048 or ECDSA signatures provide sender authentication and integrity verification before decryption is attempted.​
+*Error correction (Reed–Solomon, Hamming): Additional parity/check symbols are added to detect and correct both single‑bit and burst errors that may arise during DNA storage, transmission, or sequencing.​
 
-High capacity and low modification rate: Human DNA scale (up to 1.6 billion bases) allows very high hiding capacity with extremely low relative modification of the original sequence, preserving biological functionality.​
+*Digital signatures (RSA/ECDSA): SHA‑256 hashing plus RSA‑2048 or ECDSA signatures provide sender authentication and integrity verification before decryption is attempted.​
+
+*High capacity and low modification rate: Human DNA scale (up to 1.6 billion bases) allows very high hiding capacity with extremely low relative modification of the original sequence, preserving biological functionality.​
 
 **Methodologies**
+
 1. Compression (Huffman coding)
 The plaintext message is first compressed using lossless Huffman coding to reduce size by roughly 30–50%, mapping frequent characters to shorter bit codes and storing the codebook separately for decompression. This step both increases capacity and reduces the number of bits that must be encrypted, corrected, and embedded.​
 
@@ -33,12 +37,13 @@ Reed–Solomon codes add check symbols (typically at the beginning) that can cor
 Hamming codes add 4 parity bits per 8‑bit byte (12‑bit codewords) to correct single‑bit errors at the cost of increased length.​
 These codes are removed after decoding and correction during decryption.​
 
-DNA encoding and embedding
+**DNA encoding and embedding**
+
 Before embedding, fixed delimiters of 7 bytes are added to the start and end of the protected bitstream so that the payload can be located inside the DNA during extraction. DNA encoding uses a simple 2‑bit mapping such as A = 00, T = 01, G = 10, C = 11 to convert between bits and bases.​
 
-Method 1 – Insertion‑based embedding
-Bits (with delimiters and ECC) are inserted into the DNA bitstream at positions determined by an embedding key (e.g., every k bits), producing a longer binary string.​
+**Method 1 – Insertion‑based embedding**
 
+Bits (with delimiters and ECC) are inserted into the DNA bitstream at positions determined by an embedding key (e.g., every k bits), producing a longer binary string.​
 The modified bitstring is then mapped back to bases, yielding an encoded DNA sequence whose length is larger than the original (e.g., more than 15,000 bases in experiments).​
 
 Strengths:​
@@ -49,9 +54,9 @@ Fully blind: receiver does not need the original DNA, only the encoded DNA and k
 
 Higher payload capacity and usually simpler/faster to implement.
 
-Method 2 – Substitution and XOR‑based embedding
-The protected bits are grouped into 6‑bit chunks and mapped to codons (3 bases) using a codon mapping table.​
+**Method 2 – Substitution and XOR‑based embedding**
 
+The protected bits are grouped into 6‑bit chunks and mapped to codons (3 bases) using a codon mapping table.​
 Codons are decoded back to bits and XORed with a second DNA sequence’s bits; the result is re‑encoded into bases and then substituted into the main (human) DNA using a substitution table, typically on repeated bases.​
 
 The overall DNA length remains the same (e.g., 15,000 bases), as bases are replaced, not inserted.​
@@ -65,6 +70,7 @@ Partially blind: receiver needs additional information (indices, substitution ta
 Lower capacity and higher complexity, but stronger confidentiality and confounding structure.
 
 **Digital signatures and authenticity**
+
 A SHA‑256 hash of the final encoded DNA is generated.​
 
 This hash is signed using either RSA‑2048 or ECDSA to create a digital signature, where RSA uses large primes and yields a ~2048‑bit signature, while ECDSA achieves similar security with ~512‑bit signatures and better performance.​
@@ -72,6 +78,7 @@ This hash is signed using either RSA‑2048 or ECDSA to create a digital signatu
 The signature (or its hash) is itself converted to DNA bases and embedded, enabling verification that both the sender and the DNA sequence are genuine and untampered.​
 
 *End‑to‑end workflow*
+
 Encryption / embedding
 Compress plaintext with Huffman coding and store the character–code mapping (codebook).​
 
